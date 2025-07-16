@@ -61,4 +61,37 @@ body {
     color: #ffd700;
     text-decoration: none;
   }
+  .runner-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #ffcc00;
+    color: #111;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 30px;
+  }
+  
+  .runner-button:hover {
+    background-color: #e6b800;
+  }
+  .flappy-button {
+    background: #ffcc00;
+    color: #000;
+    border: none;
+    padding: 20px 40px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 30;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s ease;
+  }
+  
+  .flappy-button:hover {
+    background: #e6b800;
+  }
   
