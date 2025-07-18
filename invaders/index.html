@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <title>Shadow Cave Invaders</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      height: 100vh;
+    }
+
+    #startBtn {
+      padding: 20px 40px;
+      font-size: 24px;
+      color: white;
+      background-color: #560cb6;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    #heroPreview {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 200px;
+      width: 50%;
+      height: auto;
+      z-index: 1;
+    }
+
+    #gameContainer {
+      display: none;
+    }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      touch-action: none;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+</head>
+<body>
+  <h1>Shadow Cave Invaders</h1>
+
+  <button id="startBtn">Spill Shadow Cave Invaders</button>
+  <img id="heroPreview" src="hero.png" alt="Spilleren - Shadow Cave Trommis" />
+
+  <div id="gameContainer"></div>
+
+  <script>
+    document.getElementById('startBtn').addEventListener('click', () => {
+      document.getElementById('startBtn').style.display = 'none';
+      document.getElementById('heroPreview').style.display = 'none';
+      document.getElementById('gameContainer').style.display = 'block';
+    });
+  </script>
+
+  <script src="invaders.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    
+    <link rel="icon" href="heart.png">
+    <link rel="stylesheet" href="style.css">
+
+  <meta charset="UTF-8">
+  <title>Shadow Pong Riot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  
+  <style>
+    
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    #start-menu {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+    button {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+    #play-eilert {
+      background-color: rgb(30, 24, 37);
+    }
+    #play-pc {
+      background-color: rgb(51, 44, 54);
+    }
+    canvas {
+      display: none;
+      background: #111;
+    }
+  </style>
+</head>
+
+<div id="game-over" style="display:none; position:absolute; top:0; left:0; width:100vw; height:100vh; background:black; color:white; justify-content:center; align-items:center; flex-direction:column; font-size:2rem;">
+    <p id="winner-text"></p>
+    <button id="restart" style="margin-top:1rem; padding:1rem 2rem; background:#333; color:white; border:none; font-size:1rem; border-radius:10px;">Spill igjen</button>
+  </div>
+  
+<body>
+
+    <div id="start-menu">
+        <h1>Shadow Pong Riot</h1>
+        <h2>Velg spiller</h2>
+        <div class="player-select">
+          <div class="player-option" id="choose-eilert">
+            <img src="eilert.png" alt="Eilert">
+            <p>Eilert</p>
+          </div>
+          <div class="player-option" id="choose-pc">
+            <img src="pc.png" alt="PC">
+            <p>PC</p>
+          </div>
+        </div>
+      </div>
+      
+
+<canvas id="gameCanvas"></canvas>
+
+<script src="pong.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+.player-select {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+  
+  .player-option {
+    border: 4px solid transparent;
+    border-radius: 12px;
+    padding: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+    background-color: #111;
+    transition: transform 0.2s ease;
+  }
+  
+  .player-option img {
+    width: 120px;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .player-option:hover {
+    transform: scale(1.05);
+  }
+  
+  #choose-eilert {
+    border-color: rgb(39, 31, 46);
+  }
+  
+  #choose-pc {
+    border-color: rgb(39, 35, 52);
+  }
+  
