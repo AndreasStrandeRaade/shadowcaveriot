@@ -1,3 +1,16 @@
+// Firebase config og init
+const firebaseConfig = {
+  apiKey: "AIzaSyAPc7nlvqevoKVrNMooYfl84guZnkegwfI",
+  authDomain: "flappycaveriot.firebaseapp.com",
+  projectId: "flappycaveriot",
+  storageBucket: "flappycaveriot.firebasestorage.app",
+  messagingSenderId: "837291086567",
+  appId: "1:837291086567:web:2bbab5de073e04eace0842"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 let game;
 let player, pipes, beers, cursors, deathZones;
 let coinCount = 0;
@@ -63,7 +76,7 @@ function create() {
   });
 
   speedTimer = this.time.addEvent({
-    delay: 15000,
+    delay: 5000,
     callback: () => {
       currentSpeed -= 30;
       pipes.setVelocityX(currentSpeed);
@@ -90,7 +103,6 @@ function addObstacle() {
   const variation = 300;
 
   let gapPosition;
-
   if (previousGapPosition === null) {
     gapPosition = Phaser.Math.Between(safeMargin, maxGapPos);
   } else {
@@ -105,7 +117,6 @@ function addObstacle() {
   const topPipe = pipes.create(config.width, 0, 'pipe')
     .setOrigin(0, 0)
     .setDisplaySize(pipeWidth, gapPosition);
-
   const bottomPipe = pipes.create(config.width, gapPosition + gap, 'pipe')
     .setOrigin(0, 0)
     .setDisplaySize(pipeWidth, config.height - (gapPosition + gap));
@@ -140,12 +151,53 @@ function hitPipe() {
   document.getElementById('timeSurvived').textContent = finalElapsed;
   document.getElementById('gameOverScreen').style.display = 'block';
 
-  if (obstacleTimer) {
-    obstacleTimer.remove(false);
+  if (obstacleTimer) obstacleTimer.remove(false);
+  if (speedTimer) speedTimer.remove(false);
+
+  loadLeaderboard();
+}
+
+// 💾 Lagre score
+function saveScoreFromInput() {
+  const name = document.getElementById('initialsInput').value.trim().substring(0, 3).toUpperCase();
+  if (name) {
+    db.collection("highscores").add({
+      name: name,
+      score: coinCount,
+      time: parseFloat(finalElapsed),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+      window.location.href = "leaderboard.html"; // 👉 Send til leaderboard-siden
+    }).catch((error) => {
+      console.error("Feil ved lagring:", error);
+    });
+  } else {
+    alert("Skriv inn initialer (maks 3 tegn).");
   }
-  if (speedTimer) {
-    speedTimer.remove(false);
-  }
+}
+
+// 📊 Hent og vis leaderboard
+function loadLeaderboard() {
+  const list = document.getElementById('leaderboardList');
+  list.innerHTML = '<li>Laster...</li>';
+
+  db.collection("highscores")
+    .orderBy("score", "desc")
+    .limit(10)
+    .get()
+    .then(snapshot => {
+      list.innerHTML = '';
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const li = document.createElement('li');
+        li.textContent = `${data.name} – ${data.score} 🍺 (${data.time.toFixed(2)}s)`;
+        list.appendChild(li);
+      });
+    })
+    .catch(error => {
+      list.innerHTML = '<li>Kunne ikke laste leaderboard</li>';
+      console.error(error);
+    });
 }
 
 function update() {
@@ -162,7 +214,7 @@ function update() {
   }
 }
 
-// ⭐ Start spillet når DOM er klar og knapp trykkes
+// Start spill
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('startBtn').addEventListener('click', () => {
     if (!gameStarted) {
@@ -178,4 +230,6 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('restartBtn').addEventListener('click', () => {
     location.reload();
   });
+
+  document.getElementById('saveScoreBtn').addEventListener('click', saveScoreFromInput);
 });

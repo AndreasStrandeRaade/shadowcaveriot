@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flappy Cave Riot – Toppliste</title>
+  <style>
+    body {
+      background: #000;
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #ffcc00;
+    }
+
+    ol {
+      list-style: none;
+      padding-left: 0;
+      font-size: 20px;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    li {
+      margin: 8px 0;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Top 10 – Flappy Cave Riot</h1>
+  <ol id="leaderboardList"><li>Laster...</li></ol>
+  <button onclick="window.location.href = 'index.html'">Tilbake til spillet</button>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAPc7nlvqevoKVrNMooYfl84guZnkegwfI",
+      authDomain: "flappycaveriot.firebaseapp.com",
+      projectId: "flappycaveriot",
+      storageBucket: "flappycaveriot.firebasestorage.app",
+      messagingSenderId: "837291086567",
+      appId: "1:837291086567:web:2bbab5de073e04eace0842"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const list = document.getElementById('leaderboardList');
+
+    db.collection("highscores")
+      .orderBy("score", "desc")
+      .limit(10)
+      .get()
+      .then(snapshot => {
+        list.innerHTML = '';
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const li = document.createElement('li');
+          li.textContent = `${data.name} – ${data.score} 🍺 (${data.time.toFixed(2)}s)`;
+          list.appendChild(li);
+        });
+      })
+      .catch(error => {
+        list.innerHTML = '<li>Kunne ikke laste leaderboard</li>';
+        console.error(error);
+      });
+  </script>
+</body>
+</html>

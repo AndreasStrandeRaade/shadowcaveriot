@@ -79,6 +79,22 @@
       padding: 10px;
       font-size: 16px;
     }
+
+    #leaderboard {
+      margin-top: 20px;
+    }
+
+    #leaderboardList {
+      list-style: none;
+      padding-left: 0;
+      text-align: left;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    #leaderboardList li {
+      margin-bottom: 4px;
+    }
   </style>
 </head>
 <body>
@@ -96,16 +112,29 @@
     <p>Game Over</p>
     <p>Beers collected: <span id="finalBeers">0</span></p>
     <p>Time survived: <span id="timeSurvived">0</span> seconds</p>
+    
+    <div id="leaderboard">
+      <h3>Top 10 Leaderboard</h3>
+      <ol id="leaderboardList"></ol>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <label for="initialsInput" style="color: white;">Initialer:</label><br>
+      <input id="initialsInput" maxlength="3" placeholder="ABC" style="text-transform:uppercase; padding: 5px; width: 80px; text-align: center;" />
+      <button id="saveScoreBtn" style="margin-left: 10px; padding: 6px 10px; background: #ffcc00; border: none; border-radius: 6px; font-weight: bold;">Lagre score</button>
+    </div>
+
     <button onclick="location.reload()">Spill igjen</button>
   </div>
 
-  <!-- Phaser engine -->
+  <!-- Phaser -->
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
 
-  <!-- Your game logic -->
+  <!-- Firebase SDK (v8 for kompatibilitet med din kode) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <!-- Spillkoden -->
   <script src="flappy.js"></script>
-
-
-
 </body>
 </html>
